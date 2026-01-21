@@ -2,17 +2,16 @@
   "id": "xenopus_ectopic_eye_induction_v1",
   "metadata": {
     "author": "Pai et al.",
-    "description": "Induces complete, functional eye formation in non-neural tissue (gut, tail, lateral flank) by establishing a hyperpolarized eye-field prepattern.",
-    "version": "1.1",
+    "description": "Induces complete, functional eye formation in non-neural tissue by establishing a hyperpolarized eye-field prepattern.",
+    "version": "1.2",
     "references": [
-      "source: 175",
-      "source: 569",
-      "source: 932"
+      "Pai et al., 2012, Development 139:313-323",
+      "DOI: 10.1242/dev.073759"
     ]
   },
   "developmental_context": {
     "stage_start": "NF Stage 3 (4-cell)",
-    "stage_end": "NF Stage 12 (Neurula)",
+    "stage_end": "NF Stage 24 (Optic Vesicle)",
     "reference_system": "Nieuwkoop and Faber"
   },
   "target_morphology": {
@@ -21,17 +20,39 @@
     "action": "induce"
   },
   "bioelectric_state": {
-    "target_vmem_range": [-50, -30],
+    "target_vmem_range": [
+      -50,
+      -30
+    ],
     "spatial_domain": "ventral_ectoderm",
     "duration_hours": 24,
     "notes": "Requires establishing a hyperpolarized domain mimicking the natural Anterior Neural Field."
+  },
+  "control_loop": {
+    "monitoring_frequency": "Every 6 hours from Stage 10.5 to Stage 24",
+    "feedback_mechanism": {
+      "if_vmem_drifts_above": -25,
+      "if_vmem_drifts_below": -55,
+      "corrective_action": "If drift above -25mV: Apply booster injection of 0.5 ng Kv1.5 mRNA. If drift below -55mV: Allow endogenous depolarization for 2 hours."
+    },
+    "termination_criteria": {
+      "anatomical_marker": "Formation of optic cup (Stage 24) with visible lens placode",
+      "bioelectric_marker": "Hyperpolarized domain normalizes to -40mV",
+      "max_duration_hours": 48
+    }
+  },
+  "delivery_method": {
+    "type": "microinjection",
+    "spatial_restriction": "local",
+    "timing": "4-cell stage (NF Stage 3), target ventral blastomere V1",
+    "notes": "Single-cell microinjection ensures spatial specificity."
   },
   "hardware_drivers": [
     {
       "type": "ion_channel_mRNA",
       "name": "Kv1.5",
       "mechanism_of_action": "Voltage-gated Potassium efflux (Hyperpolarization)",
-      "dosage": "1-2 ng per blastomere"
+      "dosage": "1-2 ng per blastomere (initial), 0.5 ng (booster if needed)"
     },
     {
       "type": "ion_channel_mRNA",

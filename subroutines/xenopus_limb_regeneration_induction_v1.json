@@ -2,17 +2,15 @@
   "id": "xenopus_limb_regeneration_induction_v1",
   "metadata": {
     "author": "Tseng et al.",
-    "description": "Induces leg regeneration (including toes and nails) in post-metamorphic frogs that normally cannot regenerate.",
-    "version": "1.1",
+    "description": "Induces leg regeneration in post-metamorphic frogs.",
+    "version": "1.2",
     "references": [
-      "source: 739",
-      "source: 740",
-      "source: 647"
+      "Tseng et al., 2010, J. Neurosci. 30:13192-13200"
     ]
   },
   "developmental_context": {
     "stage_start": "NF Stage 66 (Post-metamorphic)",
-    "stage_end": "Adult",
+    "stage_end": "Adult (8-12 weeks post-treatment)",
     "reference_system": "Nieuwkoop and Faber"
   },
   "target_morphology": {
@@ -21,17 +19,39 @@
     "action": "regenerate"
   },
   "bioelectric_state": {
-    "target_vmem_range": [-30, -10],
+    "target_vmem_range": [
+      -30,
+      -10
+    ],
     "spatial_domain": "amputation_stump",
     "duration_hours": 24,
-    "notes": "Intracellular sodium modulation triggers downstream MSX1 expression."
+    "notes": "Intracellular sodium modulation triggers MSX1 expression."
+  },
+  "control_loop": {
+    "monitoring_frequency": "Every 8 hours for first 48h, then every 24 hours",
+    "feedback_mechanism": {
+      "if_vmem_drifts_above": -5,
+      "if_vmem_drifts_below": -35,
+      "corrective_action": "If above -5mV: Reduce ionophore. If below -35mV: Apply secondary pulse."
+    },
+    "termination_criteria": {
+      "anatomical_marker": "Blastema formation with digit condensations",
+      "bioelectric_marker": "Stump returns to resting potential (-20 to -25mV)",
+      "max_duration_hours": 168
+    }
+  },
+  "delivery_method": {
+    "type": "bead_implantation",
+    "spatial_restriction": "local",
+    "timing": "Immediately post-amputation",
+    "notes": "Slow-release bead provides sustained local delivery."
   },
   "hardware_drivers": [
     {
       "type": "ionophore_cocktail",
       "name": "Monensin Cocktail",
-      "mechanism_of_action": "Na+ Ionophore (increaes intracellular sodium/depolarization)",
-      "dosage": "Specific cocktail application to stump"
+      "mechanism_of_action": "Na+ Ionophore",
+      "dosage": "10 mM stock, 50 \u03bcL applied to bead"
     }
   ]
 }

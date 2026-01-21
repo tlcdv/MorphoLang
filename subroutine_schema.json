@@ -1,9 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Bioelectric Subroutine",
-  "description": "A standardized definition of a morphological command triggered by bioelectric state change.",
+  "description": "A standardized definition of a morphological command triggered by bioelectric state change with closed-loop homeostatic control.",
   "type": "object",
-  "required": ["id", "metadata", "target_morphology", "bioelectric_state", "hardware_drivers", "developmental_context"],
+  "required": ["id", "metadata", "target_morphology", "bioelectric_state", "hardware_drivers", "developmental_context", "control_loop", "delivery_method"],
   "properties": {
     "id": {
       "type": "string",
@@ -56,6 +56,79 @@
         "duration_hours": {
           "type": "number",
           "description": "How long the state must be maintained to trigger the module (e.g., 48 hours for planaria)."
+        }
+      }
+    },
+    "control_loop": {
+      "type": "object",
+      "description": "Closed-loop homeostatic control parameters for maintaining the bioelectric state.",
+      "required": ["monitoring_frequency", "feedback_mechanism", "termination_criteria"],
+      "properties": {
+        "monitoring_frequency": {
+          "type": "string",
+          "description": "How often to measure Vmem (e.g., 'Every 4 hours', 'Every 6 hours from Stage 10.5 to Stage 24')."
+        },
+        "feedback_mechanism": {
+          "type": "object",
+          "description": "Corrective actions if the bioelectric state drifts from target.",
+          "properties": {
+            "if_vmem_drifts_above": {
+              "type": "number",
+              "description": "Upper threshold in mV that triggers corrective action."
+            },
+            "if_vmem_drifts_below": {
+              "type": "number",
+              "description": "Lower threshold in mV that triggers corrective action."
+            },
+            "corrective_action": {
+              "type": "string",
+              "description": "Intervention to restore target state (e.g., 'Apply booster dose of 0.5 ng Kv1.5')."
+            }
+          }
+        },
+        "termination_criteria": {
+          "type": "object",
+          "description": "Conditions that signal successful completion and when to stop the intervention.",
+          "required": ["max_duration_hours"],
+          "properties": {
+            "anatomical_marker": {
+              "type": "string",
+              "description": "Observable morphological endpoint (e.g., 'Formation of optic cup at Stage 24')."
+            },
+            "bioelectric_marker": {
+              "type": "string",
+              "description": "Vmem signature indicating completion (e.g., 'Normalization to -40mV')."
+            },
+            "max_duration_hours": {
+              "type": "number",
+              "description": "Maximum intervention duration to prevent overgrowth/tumors."
+            }
+          }
+        }
+      }
+    },
+    "delivery_method": {
+      "type": "object",
+      "description": "How the hardware driver is physically delivered to achieve spatial specificity.",
+      "required": ["type", "spatial_restriction"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["microinjection", "bath_application", "bead_implantation", "electroporation", "optogenetic_targeting"],
+          "description": "Physical delivery mechanism."
+        },
+        "spatial_restriction": {
+          "type": "string",
+          "enum": ["local", "regional", "systemic"],
+          "description": "Spatial scope of the intervention."
+        },
+        "timing": {
+          "type": "string",
+          "description": "When to deliver (e.g., '4-cell stage, ventral blastomere V1')."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Additional delivery considerations."
         }
       }
     },

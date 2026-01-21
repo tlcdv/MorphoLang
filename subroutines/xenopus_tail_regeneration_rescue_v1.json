@@ -2,12 +2,10 @@
   "id": "xenopus_tail_regeneration_rescue_v1",
   "metadata": {
     "author": "Adams et al.",
-    "description": "Rescues or induces tail regeneration in non-regenerative contexts (refractory period) by driving proton efflux.",
-    "version": "1.1",
+    "description": "Rescues tail regeneration in non-regenerative contexts by driving proton efflux.",
+    "version": "1.2",
     "references": [
-      "source: 156",
-      "source: 158",
-      "source: 313"
+      "Adams et al., 2007, Development 134:1323-1335"
     ]
   },
   "developmental_context": {
@@ -21,23 +19,39 @@
     "action": "regenerate"
   },
   "bioelectric_state": {
-    "target_vmem_range": [-20, 0],
+    "target_vmem_range": [
+      -20,
+      0
+    ],
     "spatial_domain": "regeneration_bud",
     "duration_hours": 24,
-    "notes": "Relies on H+ pumping to drive Vmem change; can be substituted by non-native pumps (Yeast PMA1)."
+    "notes": "Relies on H+ pumping to drive Vmem change."
+  },
+  "control_loop": {
+    "monitoring_frequency": "Every 4 hours for first 24h, then every 12 hours",
+    "feedback_mechanism": {
+      "if_vmem_drifts_above": 5,
+      "if_vmem_drifts_below": -25,
+      "corrective_action": "If drift above +5mV: Allow homeostatic correction. If below -25mV: Apply secondary mRNA."
+    },
+    "termination_criteria": {
+      "anatomical_marker": "Tail reaches 50% of control length",
+      "bioelectric_marker": "Regeneration bud returns to baseline (-15 to -20mV)",
+      "max_duration_hours": 72
+    }
+  },
+  "delivery_method": {
+    "type": "microinjection",
+    "spatial_restriction": "local",
+    "timing": "Immediately post-amputation (within 1 hour)",
+    "notes": "Target the blastema directly."
   },
   "hardware_drivers": [
     {
       "type": "ion_channel_mRNA",
       "name": "Yeast PMA1 H+ Pump",
-      "mechanism_of_action": "Proton extrusion (Depolarization/Alkalinization support)",
-      "dosage": "Misexpression construct (Standard)"
-    },
-    {
-      "type": "protein_complex",
-      "name": "V-ATPase",
-      "mechanism_of_action": "Endogenous proton pump",
-      "dosage": "Upregulation or constitutively active form"
+      "mechanism_of_action": "Proton extrusion",
+      "dosage": "500 pg mRNA per injection site"
     }
   ]
 }

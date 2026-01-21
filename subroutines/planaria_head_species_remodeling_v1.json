@@ -2,18 +2,16 @@
   "id": "planaria_head_species_remodeling_v1",
   "metadata": {
     "author": "Emmons-Bell et al.",
-    "description": "Induces head morphologies belonging to other species (e.g., S. mediterranea, P. felina) in G. dorotocephala by altering gap junction connectivity.",
-    "version": "1.1",
+    "description": "Induces head morphologies of other species by altering gap junction connectivity.",
+    "version": "1.2",
     "references": [
-      "source: 189",
-      "source: 190",
-      "source: 411"
+      "Emmons-Bell et al., 2015, Int. J. Mol. Sci. 16:26065-26087"
     ]
   },
   "developmental_context": {
-    "stage_start": "Adult",
-    "stage_end": "Adult (Regenerating)",
-    "reference_system": "Standard Laboratory Staging"
+    "stage_start": "Adult (Post-Amputation Day 0)",
+    "stage_end": "Regeneration Day 7-10",
+    "reference_system": "Standard Planarian Regeneration Timeline"
   },
   "target_morphology": {
     "organ": "head",
@@ -21,17 +19,39 @@
     "action": "remodel"
   },
   "bioelectric_state": {
-    "target_vmem_range": [0, 0],
+    "target_vmem_range": [
+      0,
+      0
+    ],
     "spatial_domain": "global_network",
     "duration_hours": 48,
-    "notes": "Target is not a single Vmem value but a network topology state (iso-potentiality disruption) achieved via gap junction blockade."
+    "notes": "Network topology state via gap junction blockade."
+  },
+  "control_loop": {
+    "monitoring_frequency": "Every 12 hours during 48h treatment",
+    "feedback_mechanism": {
+      "if_vmem_drifts_above": 10,
+      "if_vmem_drifts_below": -10,
+      "corrective_action": "Gap junction blockade is transient; drift is expected."
+    },
+    "termination_criteria": {
+      "anatomical_marker": "Head shape matches target species morphology",
+      "bioelectric_marker": "Network connectivity stabilizes",
+      "max_duration_hours": 48
+    }
+  },
+  "delivery_method": {
+    "type": "bath_application",
+    "spatial_restriction": "systemic",
+    "timing": "Day 0-2 post-amputation for 48 continuous hours",
+    "notes": "Bath application is systemic by nature."
   },
   "hardware_drivers": [
     {
       "type": "drug_cocktail",
       "name": "Gap Junction Blocker (Octanol)",
       "mechanism_of_action": "Transient uncoupling of electrical synapses",
-      "dosage": "127 μM"
+      "dosage": "127 \u03bcM in spring water"
     }
   ]
 }
