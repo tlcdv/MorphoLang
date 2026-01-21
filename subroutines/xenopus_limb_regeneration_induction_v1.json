@@ -1,0 +1,32 @@
+{
+  "id": "xenopus_limb_regeneration_induction_v1",
+  "metadata": {
+    "author": "Tseng et al.",
+    "description": "Induces leg regeneration (including toes and nails) in post-metamorphic frogs that normally cannot regenerate.",
+    "version": "1.0",
+    "references": [
+      "source: 739",
+      "source: 740",
+      "source: 647"
+    ]
+  },
+  "target_morphology": {
+    "organ": "limb",
+    "species": "Xenopus laevis",
+    "action": "regenerate"
+  },
+  "bioelectric_state": {
+    "target_vmem_range": [-30, -10],
+    "spatial_domain": "amputation_stump",
+    "duration_hours": 24,
+    "notes": "Intracellular sodium modulation triggers downstream MSX1 expression."
+  },
+  "hardware_drivers": [
+    {
+      "type": "ionophore_cocktail",
+      "name": "Monensin Cocktail",
+      "mechanism_of_action": "Na+ Ionophore (increaes intracellular sodium/depolarization)",
+      "dosage": "Specific cocktail application to stump"
+    }
+  ]
+}

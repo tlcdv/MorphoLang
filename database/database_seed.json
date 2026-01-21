@@ -1,0 +1,142 @@
+[
+  {
+    "id": "xenopus_ectopic_eye_induction_v1",
+    "metadata": {
+      "author": "Pai et al.",
+      "description": "Induces complete, functional eye formation in non-neural tissue (gut, tail, lateral flank) by establishing a hyperpolarized eye-field prepattern.",
+      "version": "1.0",
+      "references": [
+        "source: 175",
+        "source: 569",
+        "source: 932"
+      ]
+    },
+    "target_morphology": {
+      "organ": "eye",
+      "species": "Xenopus laevis",
+      "action": "induce"
+    },
+    "bioelectric_state": {
+      "target_vmem_range": [-50, -30],
+      "spatial_domain": "ventral_ectoderm",
+      "duration_hours": 24,
+      "notes": "Requires establishing a hyperpolarized domain mimicking the natural Anterior Neural Field."
+    },
+    "hardware_drivers": [
+      {
+        "type": "ion_channel_mRNA",
+        "name": "Kv1.5",
+        "mechanism_of_action": "Voltage-gated Potassium efflux (Hyperpolarization)",
+        "dosage": "See Pai et al., 2012 for mRNA concentration"
+      },
+      {
+        "type": "ion_channel_mRNA",
+        "name": "Kir4.1",
+        "mechanism_of_action": "Inward-rectifier Potassium channel (Hyperpolarization)",
+        "dosage": "See Pai et al., 2012"
+      }
+    ]
+  },
+  {
+    "id": "xenopus_tail_regeneration_rescue_v1",
+    "metadata": {
+      "author": "Adams et al.",
+      "description": "Rescues or induces tail regeneration in non-regenerative contexts (refractory period) by driving proton efflux.",
+      "version": "1.0",
+      "references": [
+        "source: 156",
+        "source: 158",
+        "source: 313"
+      ]
+    },
+    "target_morphology": {
+      "organ": "tail",
+      "species": "Xenopus laevis",
+      "action": "regenerate"
+    },
+    "bioelectric_state": {
+      "target_vmem_range": [-20, 0],
+      "spatial_domain": "regeneration_bud",
+      "duration_hours": 24,
+      "notes": "Relies on H+ pumping to drive Vmem change; can be substituted by non-native pumps (Yeast PMA1)."
+    },
+    "hardware_drivers": [
+      {
+        "type": "ion_channel_mRNA",
+        "name": "Yeast PMA1 H+ Pump",
+        "mechanism_of_action": "Proton extrusion (Depolarization/Alkalinization support)",
+        "dosage": "Misexpression construct"
+      },
+      {
+        "type": "protein_complex",
+        "name": "V-ATPase",
+        "mechanism_of_action": "Endogenous proton pump",
+        "dosage": "Upregulation or constitutively active form"
+      }
+    ]
+  },
+  {
+    "id": "planaria_head_species_remodeling_v1",
+    "metadata": {
+      "author": "Emmons-Bell et al.",
+      "description": "Induces head morphologies belonging to other species (e.g., S. mediterranea, P. felina) in G. dorotocephala by altering gap junction connectivity.",
+      "version": "1.0",
+      "references": [
+        "source: 189",
+        "source: 190",
+        "source: 411"
+      ]
+    },
+    "target_morphology": {
+      "organ": "head",
+      "species": "Girardia dorotocephala",
+      "action": "remodel"
+    },
+    "bioelectric_state": {
+      "target_vmem_range": [0, 0],
+      "spatial_domain": "global_network",
+      "duration_hours": 48,
+      "notes": "Target is not a single Vmem value but a network topology state (iso-potentiality disruption) achieved via gap junction blockade."
+    },
+    "hardware_drivers": [
+      {
+        "type": "drug_cocktail",
+        "name": "Gap Junction Blocker (Octanol/Heptanol)",
+        "mechanism_of_action": "Transient uncoupling of electrical synapses",
+        "dosage": "See Emmons-Bell et al., 2015"
+      }
+    ]
+  },
+  {
+    "id": "xenopus_limb_regeneration_induction_v1",
+    "metadata": {
+      "author": "Tseng et al.",
+      "description": "Induces leg regeneration (including toes and nails) in post-metamorphic frogs that normally cannot regenerate.",
+      "version": "1.0",
+      "references": [
+        "source: 739",
+        "source: 740",
+        "source: 647"
+      ]
+    },
+    "target_morphology": {
+      "organ": "limb",
+      "species": "Xenopus laevis",
+      "action": "regenerate"
+    },
+    "bioelectric_state": {
+      "target_vmem_range": [-30, -10],
+      "spatial_domain": "amputation_stump",
+      "duration_hours": 24,
+      "notes": "Intracellular sodium modulation triggers downstream MSX1 expression."
+    },
+    "hardware_drivers": [
+      {
+        "type": "ionophore_cocktail",
+        "name": "Monensin Cocktail",
+        "mechanism_of_action": "Na+ Ionophore (increaes intracellular sodium/depolarization)",
+        "dosage": "Specific cocktail application to stump"
+      }
+    ]
+  }
+]

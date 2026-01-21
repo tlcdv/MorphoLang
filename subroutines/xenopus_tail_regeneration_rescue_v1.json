@@ -1,0 +1,38 @@
+{
+  "id": "xenopus_tail_regeneration_rescue_v1",
+  "metadata": {
+    "author": "Adams et al.",
+    "description": "Rescues or induces tail regeneration in non-regenerative contexts (refractory period) by driving proton efflux.",
+    "version": "1.0",
+    "references": [
+      "source: 156",
+      "source: 158",
+      "source: 313"
+    ]
+  },
+  "target_morphology": {
+    "organ": "tail",
+    "species": "Xenopus laevis",
+    "action": "regenerate"
+  },
+  "bioelectric_state": {
+    "target_vmem_range": [-20, 0],
+    "spatial_domain": "regeneration_bud",
+    "duration_hours": 24,
+    "notes": "Relies on H+ pumping to drive Vmem change; can be substituted by non-native pumps (Yeast PMA1)."
+  },
+  "hardware_drivers": [
+    {
+      "type": "ion_channel_mRNA",
+      "name": "Yeast PMA1 H+ Pump",
+      "mechanism_of_action": "Proton extrusion (Depolarization/Alkalinization support)",
+      "dosage": "Misexpression construct"
+    },
+    {
+      "type": "protein_complex",
+      "name": "V-ATPase",
+      "mechanism_of_action": "Endogenous proton pump",
+      "dosage": "Upregulation or constitutively active form"
+    }
+  ]
+}

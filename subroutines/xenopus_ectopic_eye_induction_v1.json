@@ -1,0 +1,38 @@
+{
+  "id": "xenopus_ectopic_eye_induction_v1",
+  "metadata": {
+    "author": "Pai et al.",
+    "description": "Induces complete, functional eye formation in non-neural tissue (gut, tail, lateral flank) by establishing a hyperpolarized eye-field prepattern.",
+    "version": "1.0",
+    "references": [
+      "source: 175",
+      "source: 569",
+      "source: 932"
+    ]
+  },
+  "target_morphology": {
+    "organ": "eye",
+    "species": "Xenopus laevis",
+    "action": "induce"
+  },
+  "bioelectric_state": {
+    "target_vmem_range": [-50, -30],
+    "spatial_domain": "ventral_ectoderm",
+    "duration_hours": 24,
+    "notes": "Requires establishing a hyperpolarized domain mimicking the natural Anterior Neural Field."
+  },
+  "hardware_drivers": [
+    {
+      "type": "ion_channel_mRNA",
+      "name": "Kv1.5",
+      "mechanism_of_action": "Voltage-gated Potassium efflux (Hyperpolarization)",
+      "dosage": "See Pai et al., 2012 for mRNA concentration"
+    },
+    {
+      "type": "ion_channel_mRNA",
+      "name": "Kir4.1",
+      "mechanism_of_action": "Inward-rectifier Potassium channel (Hyperpolarization)",
+      "dosage": "See Pai et al., 2012"
+    }
+  ]
+}

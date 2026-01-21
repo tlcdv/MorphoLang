@@ -1,0 +1,32 @@
+{
+  "id": "planaria_head_species_remodeling_v1",
+  "metadata": {
+    "author": "Emmons-Bell et al.",
+    "description": "Induces head morphologies belonging to other species (e.g., S. mediterranea, P. felina) in G. dorotocephala by altering gap junction connectivity.",
+    "version": "1.0",
+    "references": [
+      "source: 189",
+      "source: 190",
+      "source: 411"
+    ]
+  },
+  "target_morphology": {
+    "organ": "head",
+    "species": "Girardia dorotocephala",
+    "action": "remodel"
+  },
+  "bioelectric_state": {
+    "target_vmem_range": [0, 0],
+    "spatial_domain": "global_network",
+    "duration_hours": 48,
+    "notes": "Target is not a single Vmem value but a network topology state (iso-potentiality disruption) achieved via gap junction blockade."
+  },
+  "hardware_drivers": [
+    {
+      "type": "drug_cocktail",
+      "name": "Gap Junction Blocker (Octanol/Heptanol)",
+      "mechanism_of_action": "Transient uncoupling of electrical synapses",
+      "dosage": "See Emmons-Bell et al., 2015"
+    }
+  ]
+}
