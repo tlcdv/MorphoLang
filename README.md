@@ -2,7 +2,7 @@
 
 <img width="1200" height="798" alt="planarian-flatworm-heads-l" src="https://github.com/user-attachments/assets/a4b5431a-54f2-4677-9509-ed727692c715" />
 
-**MorphoLang** is an open-source toolkit that operationalizes the "Bioelectric Code" with **closed-loop homeostatic control**. It treats biological pattern formation as a computational process, allowing researchers to compile high-level anatomical goals (e.g., "Build an Eye") into low-level molecular interventions with feedback mechanisms.
+**MorphoLang** is an open source toolkit that operationalizes the "Bioelectric Code" with **closed loop homeostatic control**. It treats biological pattern formation as a computational process, allowing researchers to compile high level anatomical goals (e.g., "Build an Eye") into low level molecular interventions with feedback mechanisms.
 
 > "If bioelectric dynamics... can be treated as a kind of software, the next revolution in biology could be... driven by the realization that we do not have to manipulate living systems at the level of their 'machine code' (affecting specific molecules), but at the level of information."  
 > — *Levin & Martyniuk, 2017*
@@ -13,9 +13,9 @@
 
 ## 🆕 What's New in v0.3
 
-### **Closed-Loop Homeostatic Control**
+### **Closed Loop Homeostatic Control**
 MorphoLang now models bioelectricity as a **feedback system**, not a simple trigger:
-- ⏱️ **Monitoring Schedules**: Time-based checkpoints for measuring Vmem drift
+- ⏱️ **Monitoring Schedules**: Time based checkpoints for measuring Vmem drift
 - 🔁 **Feedback Mechanisms**: Decision trees for corrective actions when tissues fight back
 - 🛑 **Termination Criteria**: Stop conditions to prevent overgrowth/tumors
 - 📍 **Spatial Delivery Analysis**: Warnings for local vs. systemic mismatches
@@ -30,11 +30,11 @@ MorphoLang now models bioelectricity as a **feedback system**, not a simple trig
 
 ## 🧬 Core Philosophy
 
-Traditional regenerative medicine attempts to micromanage individual cell fates. **MorphoLang** takes a top-down **pattern homeostasis** approach:
+Traditional regenerative medicine attempts to micromanage individual cell fates. **MorphoLang** takes a top down **pattern homeostasis** approach:
 
 * **Hardware:** Ion channels and gap junctions
-* **Software:** Spatio-temporal Vmem patterns  
-* **Control Loop:** Closed-loop feedback to maintain target states
+* **Software:** Spatio temporal Vmem patterns  
+* **Control Loop:** Closed loop feedback to maintain target states
 * **Subroutines:** Modular anatomical triggers
 
 ---
@@ -149,7 +149,6 @@ We welcome bioelectric subroutines! To contribute:
 ## 📖 Documentation
 
 - [CONTRIBUTING.md](CONTRIBUTING.md) - Contribution guidelines
-- [Second Review](sketches/Second%20review.md) - Scientific rationale for v0.3
 - [Examples](examples/) - Working code samples
 
 ---
@@ -162,4 +161,4 @@ MIT License - See `LICENSE` for details
 
 **Based on the research of Dr. Michael Levin (Tufts University) and the principles of bioelectric pattern homeostasis.**
 
-*Version 0.3 implements closed-loop control as described in the "Pattern Homeostasis" model.*
+*Version 0.3 implements closed loop control as described in the "Pattern Homeostasis" model.*
