@@ -3,12 +3,17 @@
   "metadata": {
     "author": "Emmons-Bell et al.",
     "description": "Induces head morphologies belonging to other species (e.g., S. mediterranea, P. felina) in G. dorotocephala by altering gap junction connectivity.",
-    "version": "1.0",
+    "version": "1.1",
     "references": [
       "source: 189",
       "source: 190",
       "source: 411"
     ]
+  },
+  "developmental_context": {
+    "stage_start": "Adult",
+    "stage_end": "Adult (Regenerating)",
+    "reference_system": "Standard Laboratory Staging"
   },
   "target_morphology": {
     "organ": "head",
@@ -24,9 +29,9 @@
   "hardware_drivers": [
     {
       "type": "drug_cocktail",
-      "name": "Gap Junction Blocker (Octanol/Heptanol)",
+      "name": "Gap Junction Blocker (Octanol)",
       "mechanism_of_action": "Transient uncoupling of electrical synapses",
-      "dosage": "See Emmons-Bell et al., 2015"
+      "dosage": "127 μM"
     }
   ]
 }

@@ -4,12 +4,17 @@
     "metadata": {
       "author": "Pai et al.",
       "description": "Induces complete, functional eye formation in non-neural tissue (gut, tail, lateral flank) by establishing a hyperpolarized eye-field prepattern.",
-      "version": "1.0",
+      "version": "1.1",
       "references": [
         "source: 175",
         "source: 569",
         "source: 932"
       ]
+    },
+    "developmental_context": {
+      "stage_start": "NF Stage 3 (4-cell)",
+      "stage_end": "NF Stage 12 (Neurula)",
+      "reference_system": "Nieuwkoop and Faber"
     },
     "target_morphology": {
       "organ": "eye",
@@ -27,13 +32,13 @@
         "type": "ion_channel_mRNA",
         "name": "Kv1.5",
         "mechanism_of_action": "Voltage-gated Potassium efflux (Hyperpolarization)",
-        "dosage": "See Pai et al., 2012 for mRNA concentration"
+        "dosage": "1-2 ng per blastomere"
       },
       {
         "type": "ion_channel_mRNA",
         "name": "Kir4.1",
         "mechanism_of_action": "Inward-rectifier Potassium channel (Hyperpolarization)",
-        "dosage": "See Pai et al., 2012"
+        "dosage": "1-2 ng per blastomere"
       }
     ]
   },
@@ -42,12 +47,17 @@
     "metadata": {
       "author": "Adams et al.",
       "description": "Rescues or induces tail regeneration in non-regenerative contexts (refractory period) by driving proton efflux.",
-      "version": "1.0",
+      "version": "1.1",
       "references": [
         "source: 156",
         "source: 158",
         "source: 313"
       ]
+    },
+    "developmental_context": {
+      "stage_start": "NF Stage 45 (Refractory Period)",
+      "stage_end": "NF Stage 48",
+      "reference_system": "Nieuwkoop and Faber"
     },
     "target_morphology": {
       "organ": "tail",
@@ -65,13 +75,13 @@
         "type": "ion_channel_mRNA",
         "name": "Yeast PMA1 H+ Pump",
         "mechanism_of_action": "Proton extrusion (Depolarization/Alkalinization support)",
-        "dosage": "Misexpression construct"
+        "dosage": "Misexpression construct (Standard)"
       },
       {
         "type": "protein_complex",
         "name": "V-ATPase",
         "mechanism_of_action": "Endogenous proton pump",
-        "dosage": "Upregulation or constitutively active form"
+        "dosage": "Upregulation (Standard)"
       }
     ]
   },
@@ -80,12 +90,17 @@
     "metadata": {
       "author": "Emmons-Bell et al.",
       "description": "Induces head morphologies belonging to other species (e.g., S. mediterranea, P. felina) in G. dorotocephala by altering gap junction connectivity.",
-      "version": "1.0",
+      "version": "1.1",
       "references": [
         "source: 189",
         "source: 190",
         "source: 411"
       ]
+    },
+    "developmental_context": {
+      "stage_start": "Adult",
+      "stage_end": "Adult (Regenerating)",
+      "reference_system": "Standard Laboratory Staging"
     },
     "target_morphology": {
       "organ": "head",
@@ -101,9 +116,9 @@
     "hardware_drivers": [
       {
         "type": "drug_cocktail",
-        "name": "Gap Junction Blocker (Octanol/Heptanol)",
+        "name": "Gap Junction Blocker (Octanol)",
         "mechanism_of_action": "Transient uncoupling of electrical synapses",
-        "dosage": "See Emmons-Bell et al., 2015"
+        "dosage": "127 μM"
       }
     ]
   },
@@ -112,12 +127,17 @@
     "metadata": {
       "author": "Tseng et al.",
       "description": "Induces leg regeneration (including toes and nails) in post-metamorphic frogs that normally cannot regenerate.",
-      "version": "1.0",
+      "version": "1.1",
       "references": [
         "source: 739",
         "source: 740",
         "source: 647"
       ]
+    },
+    "developmental_context": {
+      "stage_start": "NF Stage 66 (Post-metamorphic)",
+      "stage_end": "Adult",
+      "reference_system": "Nieuwkoop and Faber"
     },
     "target_morphology": {
       "organ": "limb",

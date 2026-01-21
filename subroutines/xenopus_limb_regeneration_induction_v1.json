@@ -3,12 +3,17 @@
   "metadata": {
     "author": "Tseng et al.",
     "description": "Induces leg regeneration (including toes and nails) in post-metamorphic frogs that normally cannot regenerate.",
-    "version": "1.0",
+    "version": "1.1",
     "references": [
       "source: 739",
       "source: 740",
       "source: 647"
     ]
+  },
+  "developmental_context": {
+    "stage_start": "NF Stage 66 (Post-metamorphic)",
+    "stage_end": "Adult",
+    "reference_system": "Nieuwkoop and Faber"
   },
   "target_morphology": {
     "organ": "limb",

@@ -50,8 +50,10 @@ class TestBioCompiler(unittest.TestCase):
         self.assertIsNotNone(protocol)
         self.assertIsInstance(protocol, str)
         self.assertIn("BIOELECTRIC COMPILER PROTOCOL", protocol)
+        self.assertIn("PHASE 0: DEVELOPMENTAL CONTEXT", protocol) # Check for new phase
         self.assertIn("TARGET STATE DEFINITION", protocol)
         self.assertIn("HARDWARE SELECTION", protocol)
+        self.assertIn("Ratiometric Voltage Imaging", protocol) # Check for updated verification advice
     
     def test_case_insensitive_search(self):
         """Test that search is case-insensitive"""

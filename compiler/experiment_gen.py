@@ -40,14 +40,23 @@ class BioCompiler:
         target = subroutine['target_morphology']
         state = subroutine['bioelectric_state']
         drivers = subroutine['hardware_drivers']
+        dev_context = subroutine.get('developmental_context', {})
         
         # Header
         protocol = []
-        protocol.append(f"BIOELECTRIC COMPILER PROTOCOL v1.0")
+        protocol.append(f"BIOELECTRIC COMPILER PROTOCOL v1.1")
         protocol.append(f"generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
         protocol.append(f"TARGET: {target['action'].upper()} {target['organ'].upper()} in {target['species']}")
         protocol.append("-" * 50)
         
+        # Phase 0: Developmental Context (NEW)
+        if dev_context:
+            protocol.append(f"\n[PHASE 0: DEVELOPMENTAL CONTEXT]")
+            protocol.append(f"Intervention Window:")
+            protocol.append(f"  > Start Stage:    {dev_context.get('stage_start', 'Unknown')}")
+            protocol.append(f"  > End Stage:      {dev_context.get('stage_end', 'Unknown')}")
+            protocol.append(f"  > System:         {dev_context.get('reference_system', 'Unknown')}")
+
         # The "Software" Logic (Physiological Goal)
         protocol.append(f"\n[PHASE 1: TARGET STATE DEFINITION]")
         protocol.append(f"To achieve {target['organ']} morphogenesis, the tissue must enter the following state:")
@@ -64,11 +73,6 @@ class BioCompiler:
             protocol.append(f"\n  OPTION {i}: {driver['name']} ({driver['type']})")
             protocol.append(f"    - Mechanism: {driver['mechanism_of_action']}")
             protocol.append(f"    - Dosage:    {driver.get('dosage', 'See paper')}")
-            # driver might not have 'citation' key directly if it's from the seed format which has 'metadata.references'
-            # The seed format has references in metadata. I should adjust.
-            # But the guide code had 'citation' in driver. 
-            # The seed I wrote has 'references' in metadata, not in driver.
-            # I will adapt to use the metadata references if driver-specific citation is missing.
         
         if 'metadata' in subroutine and 'references' in subroutine['metadata']:
              protocol.append(f"\n  Sources: {', '.join(subroutine['metadata']['references'])}")
@@ -76,7 +80,7 @@ class BioCompiler:
         # Warnings based on text safety guidelines
         protocol.append(f"\n[PHASE 3: SAFETY & VERIFICATION]")
         protocol.append(f"(!) WARNING: High voltage/current can cause irreversible damage.")
-        protocol.append(f"(!) VERIFY:  Use voltage-reporting dyes to confirm Vmem change before 24h.")
+        protocol.append(f"(!) VERIFY:  Use Ratiometric Voltage Imaging (CC2-DMPE / DiBAC4(3)) to confirm Vmem change.")
         
         return "\n".join(protocol)
 

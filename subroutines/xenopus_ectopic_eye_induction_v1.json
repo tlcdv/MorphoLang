@@ -3,12 +3,17 @@
   "metadata": {
     "author": "Pai et al.",
     "description": "Induces complete, functional eye formation in non-neural tissue (gut, tail, lateral flank) by establishing a hyperpolarized eye-field prepattern.",
-    "version": "1.0",
+    "version": "1.1",
     "references": [
       "source: 175",
       "source: 569",
       "source: 932"
     ]
+  },
+  "developmental_context": {
+    "stage_start": "NF Stage 3 (4-cell)",
+    "stage_end": "NF Stage 12 (Neurula)",
+    "reference_system": "Nieuwkoop and Faber"
   },
   "target_morphology": {
     "organ": "eye",
@@ -26,13 +31,13 @@
       "type": "ion_channel_mRNA",
       "name": "Kv1.5",
       "mechanism_of_action": "Voltage-gated Potassium efflux (Hyperpolarization)",
-      "dosage": "See Pai et al., 2012 for mRNA concentration"
+      "dosage": "1-2 ng per blastomere"
     },
     {
       "type": "ion_channel_mRNA",
       "name": "Kir4.1",
       "mechanism_of_action": "Inward-rectifier Potassium channel (Hyperpolarization)",
-      "dosage": "See Pai et al., 2012"
+      "dosage": "1-2 ng per blastomere"
     }
   ]
 }

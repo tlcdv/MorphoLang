@@ -1,9 +1,12 @@
-# MorphoLang: A Bioelectric Compiler for Morphogenesis
+# MorphoLang: A Bioelectric Compiler for Morphogenesis (Beta)
 
 **MorphoLang** is an open-source toolkit that operationalizes the "Bioelectric Code." It treats biological pattern formation as a computational process, allowing researchers to compile high-level anatomical goals (e.g., "Build an Eye") into low-level molecular interventions (e.g., "Inject Kv1.5 mRNA").
 
 > "If bioelectric dynamics... can be treated as a kind of software, the next revolution in biology could be... driven by the realization that we do not have to manipulate living systems at the level of their 'machine code' (affecting specific molecules), but at the level of information."  
 > — *Levin & Martyniuk, 2017*
+
+**Status:** ⚠️ **BETA (Research Use Only)**  
+This tool is for validating bioelectric hypotheses. Dosages and protocols are derived from primary literature but require standard validation in your specific model organism.
 
 ---
 
@@ -19,7 +22,7 @@ Traditional regenerative medicine often attempts to micromanage individual cell 
 
 * **`/subroutines`**: The standard library of anatomical commands defined in `subroutine_schema.json`.
 * **`/compiler`**: Python scripts that translate bioelectric states into wet-lab protocols (`experiment_gen.py`).
-* **`/verification`**: Computer vision tools to verify bioelectric states using voltage-reporting dyes (`dye_decode.py`).
+* **`/verification`**: Computer vision tools to verify bioelectric states using **ratiometric voltage imaging** (`dye_decode.py`).
 * **`/database`**: A seed database of validated bioelectric interventions (`database_seed.json`).
 
 ## 🚀 Quick Start
@@ -42,7 +45,6 @@ from compiler.experiment_gen import BioCompiler
 compiler = BioCompiler()
 
 # Request a subroutine
-# The compiler searches for a bioelectric state that maps to "Eye" in "Xenopus"
 protocol = compiler.find_subroutine(organ="eye", species="Xenopus laevis")
 
 # Generate the lab manual
@@ -52,31 +54,36 @@ print(compiler.generate_protocol(protocol))
 **Output:**
 
 ```text
+[PHASE 0: DEVELOPMENTAL CONTEXT]
+Intervention Window:
+  > Start Stage:    NF Stage 3 (4-cell)
+  > End Stage:      NF Stage 12 (Neurula)
+  > System:         Nieuwkoop and Faber
+
 [PHASE 1: TARGET STATE DEFINITION]
 To achieve eye morphogenesis, the tissue must enter the following state:
   > Spatial Domain: ventral_ectoderm
   > Target Vmem:    [-50, -30] mV
-  > Duration:       24 hours
-
-[PHASE 2: HARDWARE SELECTION]
-Select ONE of the following drivers to instantiate the state:
-  OPTION 1: Kv1.5 (ion_channel_mRNA)
-    - Mechanism: Voltage-gated Potassium efflux (Hyperpolarization)
-    - Source: Pai et al., 2012
+...
 ```
 
-### 3. Verify the State
+### 3. Verify the State (Ratiometric Imaging)
 
-After applying the intervention, verify the tissue state using fluorescent microscopy data:
+After applying the intervention, verify the tissue state using **Ratiometric Imaging** (CC2-DMPE + DiBAC4(3)). This cancels out artifacts caused by dye concentration or tissue thickness.
 
 ```python
 from verification.dye_decode import BioStateValidator
 
 validator = BioStateValidator()
-vmem_map = validator.analyze_image('experiment_data/sample_01.tif')
-success, msg = validator.verify_state(vmem_map, protocol['bioelectric_state'])
 
-print(msg) # "SUCCESS: Tissue has entered the Target Bioelectric State."
+# Analyze Donor (Blue) and Acceptor (Green) channels
+vmem_map = validator.analyze_ratiometric(
+    donor_path='experiment_data/sample_01_cc2.tif',
+    acceptor_path='experiment_data/sample_01_dibac.tif'
+)
+
+success, msg = validator.verify_state(vmem_map, protocol['bioelectric_state'])
+print(msg) 
 ```
 
 ## 📚 The Standard Library (Bioelectric DB)
@@ -85,9 +92,9 @@ MorphoLang comes seeded with validated subroutines derived from primary literatu
 
 | **ID** | **Target** | **Mechanism** | **Reference** |
 |---|---|---|---|
-| `xenopus_ectopic_eye_01` | **Induce Eye** | Hyperpolarization (Kv1.5) | [Pai et al., 2012](https://doi.org/10.1242/dev.073759) |
+| `xenopus_ectopic_eye_01` | **Induce Eye** | Hyperpolarization (Kv1.5, 1-2 ng) | [Pai et al., 2012](https://doi.org/10.1242/dev.073759) |
 | `xenopus_tail_regen_01` | **Regenerate Tail** | Proton Efflux (H+ Pump) | [Adams et al., 2007](https://doi.org/10.1242/dev.02812) |
-| `planaria_head_respec_01` | **Remodel Head** | Gap Junction Blockade | [Emmons-Bell et al., 2015](https://doi.org/10.3390/ijms161126065) |
+| `planaria_head_respec_01` | **Remodel Head** | Gap Junction Blockade (127 μM) | [Emmons-Bell et al., 2015](https://doi.org/10.3390/ijms161126065) |
 | `xenopus_limb_regen_01` | **Regenerate Leg** | Sodium Ionophore | [Tseng et al., 2010](https://doi.org/10.1523/JNEUROSCI.3769-10.2010) |
 
 ## 🤝 Contributing
@@ -95,7 +102,7 @@ MorphoLang comes seeded with validated subroutines derived from primary literatu
 We welcome contributions! If you have discovered a new **Bioelectric State** that maps to a morphological outcome:
 
 1. Fork the repo.
-2. Create a new JSON file in `/subroutines` following the `subroutine_schema.json`.
+2. Create a new JSON file in `/subroutines` following the `subroutine_schema.json` (ensure you include `developmental_context`).
 3. Ensure your `target_vmem_range` is supported by peer-reviewed data.
 4. Submit a Pull Request.
 

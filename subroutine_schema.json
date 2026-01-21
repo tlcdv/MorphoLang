@@ -3,7 +3,7 @@
   "title": "Bioelectric Subroutine",
   "description": "A standardized definition of a morphological command triggered by bioelectric state change.",
   "type": "object",
-  "required": ["id", "metadata", "target_morphology", "bioelectric_state", "hardware_drivers"],
+  "required": ["id", "metadata", "target_morphology", "bioelectric_state", "hardware_drivers", "developmental_context"],
   "properties": {
     "id": {
       "type": "string",
@@ -19,6 +19,16 @@
           "type": "array",
           "items": { "type": "string", "description": "DOI or citation for the source experiment." }
         }
+      }
+    },
+    "developmental_context": {
+      "type": "object",
+      "description": "The specific timing and developmental window for the intervention.",
+      "required": ["stage_start", "reference_system"],
+      "properties": {
+        "stage_start": { "type": "string", "description": "Start stage (e.g., 'NF Stage 10.5')." },
+        "stage_end": { "type": "string", "description": "End stage (e.g., 'NF Stage 24')." },
+        "reference_system": { "type": "string", "description": "Staging system used (e.g., 'Nieuwkoop and Faber')." }
       }
     },
     "target_morphology": {
@@ -57,7 +67,8 @@
         "properties": {
           "type": { "type": "string", "enum": ["ion_channel_mRNA", "drug_cocktail", "optogenetics", "ionophore", "protein_complex", "ionophore_cocktail"] },
           "name": { "type": "string", "description": "Specific agent name (e.g., 'Kv1.5', 'H+ V-ATPase', 'Ivermectin')." },
-          "mechanism_of_action": { "type": "string", "description": "e.g., 'Potassium efflux', 'Proton pumping', 'Gap junction blockade'." }
+          "mechanism_of_action": { "type": "string", "description": "e.g., 'Potassium efflux', 'Proton pumping', 'Gap junction blockade'." },
+          "dosage": { "type": "string", "description": "Precise dosage information (e.g., '1-2 ng per blastomere', '127 μM')." }
         }
       }
     }

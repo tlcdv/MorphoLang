@@ -34,14 +34,26 @@ class TestDatabaseIntegrity(unittest.TestCase):
     
     def test_all_entries_have_required_fields(self):
         """Test that all entries have required fields"""
+        # Updated to include 'developmental_context'
         required_fields = ['id', 'metadata', 'target_morphology', 
-                          'bioelectric_state', 'hardware_drivers']
+                          'bioelectric_state', 'hardware_drivers',
+                          'developmental_context']
         
         for entry in self.database:
             for field in required_fields:
                 self.assertIn(field, entry, 
                             f"Entry {entry.get('id', 'unknown')} missing field: {field}")
     
+    def test_developmental_context_fields(self):
+        """Test that developmental_context has required subfields"""
+        required_subfields = ['stage_start', 'reference_system']
+        
+        for entry in self.database:
+            context = entry['developmental_context']
+            for field in required_subfields:
+                 self.assertIn(field, context,
+                             f"Entry {entry['id']}: developmental_context missing {field}")
+
     def test_unique_ids(self):
         """Test that all subroutine IDs are unique"""
         ids = [entry['id'] for entry in self.database]

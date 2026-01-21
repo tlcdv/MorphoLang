@@ -3,12 +3,17 @@
   "metadata": {
     "author": "Adams et al.",
     "description": "Rescues or induces tail regeneration in non-regenerative contexts (refractory period) by driving proton efflux.",
-    "version": "1.0",
+    "version": "1.1",
     "references": [
       "source: 156",
       "source: 158",
       "source: 313"
     ]
+  },
+  "developmental_context": {
+    "stage_start": "NF Stage 45 (Refractory Period)",
+    "stage_end": "NF Stage 48",
+    "reference_system": "Nieuwkoop and Faber"
   },
   "target_morphology": {
     "organ": "tail",
@@ -26,7 +31,7 @@
       "type": "ion_channel_mRNA",
       "name": "Yeast PMA1 H+ Pump",
       "mechanism_of_action": "Proton extrusion (Depolarization/Alkalinization support)",
-      "dosage": "Misexpression construct"
+      "dosage": "Misexpression construct (Standard)"
     },
     {
       "type": "protein_complex",
