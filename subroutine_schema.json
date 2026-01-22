@@ -56,7 +56,26 @@
         "duration_hours": {
           "type": "number",
           "description": "How long the state must be maintained to trigger the module (e.g., 48 hours for planaria)."
+        },
+        "temporal_profile": {
+          "type": "string",
+          "enum": ["constant", "oscillating", "pulsatile", "gradient"],
+          "description": "The temporal pattern of the voltage signal (e.g., 'constant', 'oscillating')."
         }
+      }
+    },
+    "downstream_biomarkers": {
+      "type": "array",
+      "description": "Genetic markers triggered by the bioelectric state (interface to transcriptional machinery).",
+      "items": {
+        "type": "object",
+        "properties": {
+          "gene": { "type": "string", "description": "Target gene name (e.g., 'Msx1', 'Notch', 'Pax6')." },
+          "expected_expression": { "type": "string", "enum": ["upregulated", "downregulated", "ectopic"], "description": "Expected change in expression." },
+          "check_time": { "type": "string", "description": "When to verify expression (e.g., '24h post-treatment')." },
+          "location": { "type": "string", "description": "Tissue location for expression check." }
+        },
+        "required": ["gene", "expected_expression"]
       }
     },
     "control_loop": {

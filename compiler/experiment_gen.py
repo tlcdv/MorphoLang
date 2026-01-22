@@ -123,6 +123,22 @@ class BioCompiler:
         
         return protocol
 
+    def _generate_genetic_verification(self, biomarkers: List[Dict]) -> List[str]:
+        """Generate secondary verification steps using genetic markers."""
+        protocol = []
+        protocol.append("SECONDARY VERIFICATION (Genetic Markers):")
+        protocol.append("Confirm bioelectric state has successfully triggered transcriptional machinery:")
+        protocol.append("")
+        
+        for marker in biomarkers:
+            protocol.append(f"  > Gene:      {marker['gene']}")
+            protocol.append(f"    Expected:  {marker['expected_expression'].upper()}")
+            protocol.append(f"    Timing:    {marker['check_time']}")
+            protocol.append(f"    Location:  {marker['location']}")
+            protocol.append("")
+            
+        return protocol
+
     def generate_protocol(self, subroutine: Dict) -> str:
         """Translates the Bioelectric State into a Homeostatic Control Protocol."""
         target = subroutine['target_morphology']
@@ -131,10 +147,11 @@ class BioCompiler:
         dev_context = subroutine.get('developmental_context', {})
         control_loop = subroutine.get('control_loop', {})
         delivery = subroutine.get('delivery_method', {})
+        biomarkers = subroutine.get('downstream_biomarkers', [])
         
         protocol = []
         protocol.append("=" * 70)
-        protocol.append(f"BIOELECTRIC COMPILER PROTOCOL v0.3 (Homeostatic Control)")
+        protocol.append(f"BIOELECTRIC COMPILER PROTOCOL v0.4 (Genetic Interface)")
         protocol.append(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
         protocol.append(f"TARGET: {target['action'].upper()} {target['organ'].upper()} in {target['species']}")
         protocol.append("=" * 70)
@@ -153,6 +170,7 @@ class BioCompiler:
         protocol.append(f"  > Spatial Domain: {state['spatial_domain']}")
         protocol.append(f"  > Target Vmem:    {state['target_vmem_range']} mV")
         protocol.append(f"  > Duration:       {state['duration_hours']}h (minimum)")
+        protocol.append(f"  > Profile:        {state.get('temporal_profile', 'constant').upper()} signal")
         protocol.append(f"  > Notes:          {state.get('notes', 'N/A')}")
 
         protocol.append("")
@@ -208,15 +226,15 @@ class BioCompiler:
 
         protocol.append("")
         protocol.append("[PHASE 5: SAFETY & VERIFICATION]")
-        protocol.append("(!) CRITICAL SAFETY WARNINGS:")
-        protocol.append("    - Monitor for tumor formation if intervention exceeds max duration")
-        protocol.append("    - High voltage equipment can cause irreversible tissue damage")
-        protocol.append("    - All animal work requires IACUC approval")
-        protocol.append("")
         protocol.append("(!) VERIFICATION METHOD:")
         protocol.append("    - Use Ratiometric Voltage Imaging (CC2-DMPE / DiBAC4) at each checkpoint")
         protocol.append("    - Calculate Ratio = I_donor / I_acceptor")
-        protocol.append("    - Compare to target Vmem range using calibration curve")
+        
+        if biomarkers:
+            protocol.append("")
+            genetic_verification = self._generate_genetic_verification(biomarkers)
+            for line in genetic_verification:
+                protocol.append(line)
         
         protocol.append("")
         protocol.append("=" * 70)

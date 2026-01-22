@@ -3,8 +3,8 @@
     "id": "xenopus_ectopic_eye_induction_v1",
     "metadata": {
       "author": "Pai et al.",
-      "description": "Induces complete, functional eye formation in non-neural tissue by establishing a hyperpolarized eye-field prepattern.",
-      "version": "1.2",
+      "description": "Induces complete, functional eye formation in non-neural tissue (gut, tail, lateral flank) by establishing a hyperpolarized eye-field prepattern.",
+      "version": "1.3",
       "references": [
         "Pai et al., 2012, Development 139:313-323",
         "DOI: 10.1242/dev.073759"
@@ -21,24 +21,36 @@
       "action": "induce"
     },
     "bioelectric_state": {
-      "target_vmem_range": [
-        -50,
-        -30
-      ],
+      "target_vmem_range": [-50, -30],
       "spatial_domain": "ventral_ectoderm",
       "duration_hours": 24,
+      "temporal_profile": "constant",
       "notes": "Requires establishing a hyperpolarized domain mimicking the natural Anterior Neural Field."
     },
+    "downstream_biomarkers": [
+      {
+        "gene": "Rx1",
+        "expected_expression": "upregulated",
+        "check_time": "Stage 12.5 (Late Gastrula)",
+        "location": "Induced eye field"
+      },
+      {
+        "gene": "Pax6",
+        "expected_expression": "upregulated",
+        "check_time": "Stage 15 (Neurula)",
+        "location": "Induced eye field"
+      }
+    ],
     "control_loop": {
       "monitoring_frequency": "Every 6 hours from Stage 10.5 to Stage 24",
       "feedback_mechanism": {
         "if_vmem_drifts_above": -25,
         "if_vmem_drifts_below": -55,
-        "corrective_action": "If drift above -25mV: Apply booster injection of 0.5 ng Kv1.5 mRNA. If drift below -55mV: Allow endogenous depolarization for 2 hours."
+        "corrective_action": "If drift above -25mV: Apply booster injection of 0.5 ng Kv1.5 mRNA. If drift below -55mV: Reduce by allowing endogenous depolarization for 2 hours before re-measuring."
       },
       "termination_criteria": {
         "anatomical_marker": "Formation of optic cup (Stage 24) with visible lens placode",
-        "bioelectric_marker": "Hyperpolarized domain normalizes to -40mV",
+        "bioelectric_marker": "Hyperpolarized domain normalizes to -40mV as eye field commits",
         "max_duration_hours": 48
       }
     },
@@ -46,7 +58,7 @@
       "type": "microinjection",
       "spatial_restriction": "local",
       "timing": "4-cell stage (NF Stage 3), target ventral blastomere V1",
-      "notes": "Single-cell microinjection ensures spatial specificity."
+      "notes": "Single-cell microinjection ensures spatial specificity. Avoid injection into dorsal cells to prevent neural plate interference."
     },
     "hardware_drivers": [
       {
@@ -67,15 +79,16 @@
     "id": "xenopus_tail_regeneration_rescue_v1",
     "metadata": {
       "author": "Adams et al.",
-      "description": "Rescues tail regeneration in non-regenerative contexts by driving proton efflux.",
-      "version": "1.2",
+      "description": "Rescues or induces tail regeneration in non-regenerative contexts (refractory period) by driving proton efflux.",
+      "version": "1.3",
       "references": [
-        "Adams et al., 2007, Development 134:1323-1335"
+        "Adams et al., 2007, Development 134:1323-1335",
+        "DOI: 10.1242/dev.02812"
       ]
     },
     "developmental_context": {
       "stage_start": "NF Stage 45 (Refractory Period)",
-      "stage_end": "NF Stage 48",
+      "stage_end": "NF Stage 48 (Tail Regeneration Complete)",
       "reference_system": "Nieuwkoop and Faber"
     },
     "target_morphology": {
@@ -84,39 +97,57 @@
       "action": "regenerate"
     },
     "bioelectric_state": {
-      "target_vmem_range": [
-        -20,
-        0
-      ],
+      "target_vmem_range": [-20, 0],
       "spatial_domain": "regeneration_bud",
       "duration_hours": 24,
-      "notes": "Relies on H+ pumping to drive Vmem change."
+      "temporal_profile": "constant",
+      "notes": "Relies on H+ pumping to drive Vmem change; can be substituted by non-native pumps (Yeast PMA1)."
     },
+    "downstream_biomarkers": [
+      {
+        "gene": "Notch",
+        "expected_expression": "upregulated",
+        "check_time": "18h post-amputation",
+        "location": "Regeneration bud (Blastema)"
+      },
+      {
+        "gene": "Msx1",
+        "expected_expression": "upregulated",
+        "check_time": "24h post-amputation",
+        "location": "Mesenchymal core"
+      }
+    ],
     "control_loop": {
-      "monitoring_frequency": "Every 4 hours for first 24h, then every 12 hours",
+      "monitoring_frequency": "Every 4 hours for first 24h, then every 12 hours until tail elongation completes",
       "feedback_mechanism": {
         "if_vmem_drifts_above": 5,
         "if_vmem_drifts_below": -25,
-        "corrective_action": "If drift above +5mV: Allow homeostatic correction. If below -25mV: Apply secondary mRNA."
+        "corrective_action": "If drift above +5mV (excessive depolarization): Reduce proton pump activity or wait for homeostatic correction. If drift below -25mV: Apply secondary mRNA injection to regeneration bud."
       },
       "termination_criteria": {
-        "anatomical_marker": "Tail reaches 50% of control length",
-        "bioelectric_marker": "Regeneration bud returns to baseline (-15 to -20mV)",
+        "anatomical_marker": "Tail reaches 50% of control length with visible fin fold and notochord extension",
+        "bioelectric_marker": "Regeneration bud returns to baseline Vmem (-15mV to -20mV) indicating completion",
         "max_duration_hours": 72
       }
     },
     "delivery_method": {
       "type": "microinjection",
       "spatial_restriction": "local",
-      "timing": "Immediately post-amputation (within 1 hour)",
-      "notes": "Target the blastema directly."
+      "timing": "Immediately post-amputation (within 1 hour), direct injection into amputation plane",
+      "notes": "Target the blastema/regeneration bud directly. Avoid systemic delivery to prevent ectopic growth."
     },
     "hardware_drivers": [
       {
         "type": "ion_channel_mRNA",
         "name": "Yeast PMA1 H+ Pump",
-        "mechanism_of_action": "Proton extrusion",
+        "mechanism_of_action": "Proton extrusion (Depolarization/Alkalinization support)",
         "dosage": "500 pg mRNA per injection site"
+      },
+      {
+        "type": "protein_complex",
+        "name": "V-ATPase",
+        "mechanism_of_action": "Endogenous proton pump",
+        "dosage": "Upregulation via 200 pg constitutively active construct"
       }
     ]
   },
@@ -124,14 +155,15 @@
     "id": "planaria_head_species_remodeling_v1",
     "metadata": {
       "author": "Emmons-Bell et al.",
-      "description": "Induces head morphologies of other species by altering gap junction connectivity.",
-      "version": "1.2",
+      "description": "Induces head morphologies belonging to other species (e.g., S. mediterranea, P. felina) in G. dorotocephala by altering gap junction connectivity.",
+      "version": "1.3",
       "references": [
-        "Emmons-Bell et al., 2015, Int. J. Mol. Sci. 16:26065-26087"
+        "Emmons-Bell et al., 2015, Int. J. Mol. Sci. 16:26065-26087",
+        "DOI: 10.3390/ijms161126065"
       ]
     },
     "developmental_context": {
-      "stage_start": "Adult (Post-Amputation Day 0)",
+      "stage_start": "Adult (Intact or Post-Amputation Day 0)",
       "stage_end": "Regeneration Day 7-10",
       "reference_system": "Standard Planarian Regeneration Timeline"
     },
@@ -141,39 +173,51 @@
       "action": "remodel"
     },
     "bioelectric_state": {
-      "target_vmem_range": [
-        0,
-        0
-      ],
+      "target_vmem_range": [0, 0],
       "spatial_domain": "global_network",
       "duration_hours": 48,
-      "notes": "Network topology state via gap junction blockade."
+      "temporal_profile": "constant",
+      "notes": "Target is not a single Vmem value but a network topology state (iso-potentiality disruption) achieved via gap junction blockade."
     },
+    "downstream_biomarkers": [
+      {
+        "gene": "ndk",
+        "expected_expression": "ectopic",
+        "check_time": "48h post-treatment",
+        "location": "Anterior blastema"
+      },
+      {
+        "gene": "smed-prep",
+        "expected_expression": "upregulated",
+        "check_time": "72h post-treatment",
+        "location": "Head region"
+      }
+    ],
     "control_loop": {
-      "monitoring_frequency": "Every 12 hours during 48h treatment",
+      "monitoring_frequency": "Every 12 hours during 48h treatment window, then daily until Day 7",
       "feedback_mechanism": {
         "if_vmem_drifts_above": 10,
         "if_vmem_drifts_below": -10,
-        "corrective_action": "Gap junction blockade is transient; drift is expected."
+        "corrective_action": "Gap junction blockade is transient; drift is expected and normal. Monitor for head shape emergence rather than strict Vmem maintenance."
       },
       "termination_criteria": {
-        "anatomical_marker": "Head shape matches target species morphology",
-        "bioelectric_marker": "Network connectivity stabilizes",
+        "anatomical_marker": "Head shape matches target species morphology (wider head, different eye spacing for S. mediterranea phenotype)",
+        "bioelectric_marker": "Network connectivity pattern stabilizes (gap junction communication restored post-treatment)",
         "max_duration_hours": 48
       }
     },
     "delivery_method": {
       "type": "bath_application",
       "spatial_restriction": "systemic",
-      "timing": "Day 0-2 post-amputation for 48 continuous hours",
-      "notes": "Bath application is systemic by nature."
+      "timing": "During regeneration window (Day 0-2 post-amputation) for 48 continuous hours",
+      "notes": "Bath application is systemic by nature. This is acceptable for planaria as entire organism remodels. For localized interventions in larger organisms, consider alternative delivery."
     },
     "hardware_drivers": [
       {
         "type": "drug_cocktail",
         "name": "Gap Junction Blocker (Octanol)",
         "mechanism_of_action": "Transient uncoupling of electrical synapses",
-        "dosage": "127 \u03bcM in spring water"
+        "dosage": "127 μM in spring water, change daily"
       }
     ]
   },
@@ -181,14 +225,15 @@
     "id": "xenopus_limb_regeneration_induction_v1",
     "metadata": {
       "author": "Tseng et al.",
-      "description": "Induces leg regeneration in post-metamorphic frogs.",
-      "version": "1.2",
+      "description": "Induces leg regeneration (including toes and nails) in post-metamorphic frogs that normally cannot regenerate.",
+      "version": "1.3",
       "references": [
-        "Tseng et al., 2010, J. Neurosci. 30:13192-13200"
+        "Tseng et al., 2010, J. Neurosci. 30:13192-13200",
+        "DOI: 10.1523/JNEUROSCI.3769-10.2010"
       ]
     },
     "developmental_context": {
-      "stage_start": "NF Stage 66 (Post-metamorphic)",
+      "stage_start": "NF Stage 66 (Post-metamorphic Froglet)",
       "stage_end": "Adult (8-12 weeks post-treatment)",
       "reference_system": "Nieuwkoop and Faber"
     },
@@ -198,39 +243,45 @@
       "action": "regenerate"
     },
     "bioelectric_state": {
-      "target_vmem_range": [
-        -30,
-        -10
-      ],
+      "target_vmem_range": [-30, -10],
       "spatial_domain": "amputation_stump",
       "duration_hours": 24,
-      "notes": "Intracellular sodium modulation triggers MSX1 expression."
+      "temporal_profile": "constant",
+      "notes": "Intracellular sodium modulation triggers downstream MSX1 expression."
     },
+    "downstream_biomarkers": [
+      {
+        "gene": "Msx1",
+        "expected_expression": "upregulated",
+        "check_time": "24h post-treatment",
+        "location": "Blastema mesenchyme"
+      }
+    ],
     "control_loop": {
-      "monitoring_frequency": "Every 8 hours for first 48h, then every 24 hours",
+      "monitoring_frequency": "Every 8 hours for first 48h, then every 24 hours for 2 weeks",
       "feedback_mechanism": {
         "if_vmem_drifts_above": -5,
         "if_vmem_drifts_below": -35,
-        "corrective_action": "If above -5mV: Reduce ionophore. If below -35mV: Apply secondary pulse."
+        "corrective_action": "If drift above -5mV: Risk of excessive proliferation; reduce ionophore exposure. If drift below -35mV: Apply secondary ionophore pulse (50% initial dose)."
       },
       "termination_criteria": {
-        "anatomical_marker": "Blastema formation with digit condensations",
-        "bioelectric_marker": "Stump returns to resting potential (-20 to -25mV)",
+        "anatomical_marker": "Blastema formation complete with digit condensations visible (4-6 weeks post-treatment)",
+        "bioelectric_marker": "Stump returns to resting potential (-20 to -25mV) as regenerative program completes",
         "max_duration_hours": 168
       }
     },
     "delivery_method": {
       "type": "bead_implantation",
       "spatial_restriction": "local",
-      "timing": "Immediately post-amputation",
-      "notes": "Slow-release bead provides sustained local delivery."
+      "timing": "Immediately post-amputation, implant slow-release bead at stump surface",
+      "notes": "Slow-release bead (Affi-Gel) soaked in Monensin provides sustained local delivery over 24-48h. Alternative: multiple microinjections at 0h, 12h, 24h."
     },
     "hardware_drivers": [
       {
         "type": "ionophore_cocktail",
         "name": "Monensin Cocktail",
-        "mechanism_of_action": "Na+ Ionophore",
-        "dosage": "10 mM stock, 50 \u03bcL applied to bead"
+        "mechanism_of_action": "Na+ Ionophore (increases intracellular sodium/depolarization)",
+        "dosage": "10 mM stock solution, 50 μL applied to bead or direct stump application"
       }
     ]
   }

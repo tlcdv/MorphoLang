@@ -34,10 +34,11 @@ class TestDatabaseIntegrity(unittest.TestCase):
     
     def test_all_entries_have_required_fields(self):
         """Test that all entries have required fields"""
-        # Updated to include 'developmental_context'
+        # Updated to include v0.4 fields
         required_fields = ['id', 'metadata', 'target_morphology', 
                           'bioelectric_state', 'hardware_drivers',
-                          'developmental_context']
+                          'developmental_context', 'control_loop',
+                          'delivery_method']
         
         for entry in self.database:
             for field in required_fields:
@@ -53,6 +54,23 @@ class TestDatabaseIntegrity(unittest.TestCase):
             for field in required_subfields:
                  self.assertIn(field, context,
                              f"Entry {entry['id']}: developmental_context missing {field}")
+
+    def test_bioelectric_state_fields(self):
+        """Test that bioelectric_state has temporal_profile"""
+        for entry in self.database:
+            state = entry['bioelectric_state']
+            self.assertIn('temporal_profile', state,
+                        f"Entry {entry['id']}: bioelectric_state missing temporal_profile")
+
+    def test_downstream_biomarkers(self):
+        """Test that downstream_biomarkers are present and valid"""
+        for entry in self.database:
+            # Biomarkers are recommended but technically optional in schema, 
+            # but our seed database should have them
+            if 'downstream_biomarkers' in entry:
+                for marker in entry['downstream_biomarkers']:
+                    self.assertIn('gene', marker)
+                    self.assertIn('expected_expression', marker)
 
     def test_unique_ids(self):
         """Test that all subroutine IDs are unique"""
