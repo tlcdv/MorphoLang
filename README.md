@@ -1,9 +1,9 @@
 # MorphoLang: A Bioelectric Compiler for Morphogenesis (v0.4)
 
-**MorphoLang** is an open-source toolkit that operationalizes the "Bioelectric Code." It treats biological pattern formation as a computational process, allowing researchers to compile high-level anatomical goals (e.g., "Build an Eye") into low-level molecular interventions.
+**MorphoLang** is an open source toolkit that operationalizes the "Bioelectric Code." It treats biological pattern formation as a computational process, allowing researchers to compile high level anatomical goals (e.g., "Build an Eye") into low level molecular interventions.
 
-> "If bioelectric dynamics... can be treated as a kind of software, the next revolution in biology could be... driven by the realization that we do not have to manipulate living systems at the level of their 'machine code' (affecting specific molecules), but at the level of information."  
-> — *Levin & Martyniuk, 2017*
+> "If bioelectric dynamics... can be treated as a kind of software, the next revolution in biology could be... driven by the realization that we do not have to manipulate living systems at the level of their 'machine code' (affecting specific molecules), but at the level of information.". 
+> *Levin & Martyniuk, 2017*
 
 **Status:** 🧬 **BETA v0.4 - Genetic Interface** (Research Use Only)
 
@@ -25,11 +25,11 @@ New tool to read voltage patterns and predict morphology:
 
 ## 🧬 Core Philosophy
 
-Traditional regenerative medicine attempts to micromanage individual cell fates. **MorphoLang** takes a top-down **pattern homeostasis** approach:
+Traditional regenerative medicine attempts to micromanage individual cell fates. **MorphoLang** takes a top down **pattern homeostasis** approach:
 
 * **Hardware:** Ion channels and gap junctions
 * **Software:** Spatio-temporal Vmem patterns  
-* **Control Loop:** Closed-loop feedback to maintain target states
+* **Control Loop:** Closed loop feedback to maintain target states
 * **Interface:** Coupling bioelectric triggers to transcriptional networks
 
 ---
