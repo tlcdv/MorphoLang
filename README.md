@@ -119,9 +119,9 @@ We welcome bioelectric subroutines! To contribute:
 
 ## ⚠️ Safety & Ethics
 
-- **Research Use Only**: Protocols are for controlled laboratory environments
-- **Animal Ethics**: IACUC approval required for all animal work
-- **Tumor Risk**: Stop conditions prevent indefinite interventions
+- **Research Use Only**: Protocols are for controlled laboratory environments. 
+- **Animal Ethics**: IACUC approval required for all animal work. 
+- **Tumor Risk**: Stop conditions prevent indefinite interventions. 
 
 ---
 
